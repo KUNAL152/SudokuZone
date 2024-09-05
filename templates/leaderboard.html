@@ -1,0 +1,38 @@
+<!-- templates/home.html -->
+{% extends "layout.html" %}
+
+{% block title %}
+Leaderboard - Sudoku Lounge
+{% endblock %}
+
+{% block content %}
+
+<!-- Leaderboard Section -->
+<section class="leaderboard">
+    <h2>Top Players</h2>
+    <table class="leaderboard-table">
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Score</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Player1</td>
+            <td>1500</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Player2</td>
+            <td>1400</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Player3</td>
+            <td>1300</td>
+        </tr>
+    </table>
+    <a href="#">View Full Leaderboard</a>
+</section>
+
+{% endblock %}
