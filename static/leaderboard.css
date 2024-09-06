@@ -1,0 +1,30 @@
+/* Leaderboard Section */
+.leaderboard {
+  height:100%;
+  background-color: #f9f9f9;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.leaderboard h2 {
+  font-size: 32px;
+  color: #333;
+}
+
+.leaderboard-table {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 600px;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.leaderboard-table th {
+  background-color: #007bff;
+  color: white;
+}

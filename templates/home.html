@@ -1,12 +1,21 @@
 <!-- templates/home.html -->
 {% extends "layout.html" %}
 
-{% block title %}
-Home - Sudoku Lounge
+{% block head %}
+<title>Home - Sudoku Lounge</title>
+<link rel="stylesheet" href='/static/home.css'>
 {% endblock %}
 
 {% block content %}
 
-    {% include 'sign-in.html' %}
+<!-- Hero Section -->
+<section class="hero">
+    <h1>Welcome to Sudoku Lounge</h1>
+    <p>Challenge your mind with endless Sudoku puzzles!</p>
+    <div class="buttons">
+        <a class="play-button" href="/play">Play as Guest</a>
+        <a class="login-button" href='/login'>Login / Sign Up</a>
+    </div>
+</section>
 
 {% endblock %}
