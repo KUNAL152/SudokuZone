@@ -7,5 +7,70 @@
 {% endblock %}
   
 {% block content %}
+<div class="container1">
+    <div class="sudoku">
+            <canvas id="sudokuBoard" width="451" height="451"></canvas>
+    </div>
+    
+    <div class="controls">
+        <!-- Action buttons -->
+        <div class="buttons">
+            <button>Undo</button>
+            <button>Erase</button>
+            <button>Notes</button>
+            <button>Hint</button>
+        </div>
 
+        <!-- Numpad (1-9) -->
+        <div class="numpad">
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+        </div>
+
+        <!-- New Game button -->
+        <div class="new-game">
+            New Game
+        </div>
+    </div>
+</div>
+<script>
+    // Set up the canvas and context
+    const canvas = document.getElementById('sudokuBoard');
+    const ctx = canvas.getContext('2d');
+
+    const cellSize = 50;  
+    const boardSize = 9;  // 9x9 grid
+    const boardPixelSize = cellSize * boardSize;
+
+    // Draw the board with all lines
+    function drawSudokuBoard() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);  // Clear canvas before drawing
+
+        // Draw each cell (1px border for each cell)
+        for (let i = 0; i < boardSize; i++) {
+            for (let j = 0; j < boardSize; j++) {
+                ctx.strokeStyle = "#335AAE";
+                ctx.lineWidth = 0.5;
+                ctx.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            }
+        }
+
+        // Draw the thicker 2px border for the 3x3 sub-grids
+        for (let i = 0; i <= boardSize; i += 3) {
+            ctx.lineWidth = 2;
+            ctx.strokeRect(i * cellSize, 0, 1, boardPixelSize);  // Vertical lines
+            ctx.strokeRect(0, i * cellSize, boardPixelSize, 1);  // Horizontal lines
+        }
+    }
+
+    // Call the function to draw the Sudoku board
+    drawSudokuBoard();
+</script>
 {% endblock %}

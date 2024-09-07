@@ -3,17 +3,18 @@
 
 /* Login form styling */
 .login_form {
-    width: 100%;
-    margin: 10 auto;  /* Reduced margin */
-    max-width: 300px;  /* Reduced max-width */
-    background: #fff;
+    height : 91%;
+    width: 100%; 
+    margin: auto;
+    max-width: 375px;
+    background: white;
     border-radius: 6px;
-    padding: 25px 15px;  /* Reduced padding */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);  /* Slightly lighter shadow */
+    padding: 25px 15px;
+    box-shadow:0 8px 16px rgba(0, 0, 0, 0.2);  /* Slightly lighter shadow */
 }
 
 .login_form h3 {
-    font-size: 14px;  /* Reduced font size */
+    font-size: 16px;  
     text-align: center;
 }
 
@@ -30,35 +31,35 @@
 }
 
 .login_form .login_option .option a {
-    height: 40px;  /* Reduced button height */
+    height: 42px;  
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     background: #F8F8FB;
     border: 1px solid #DADAF2;
     border-radius: 5px;
-    margin: 24px 0 16px 0;  /* Reduced margin */
+    margin: 24px 0 16px 0;  
     text-decoration: none;
     color: #171645;
-    font-size: 12px;  /* Reduced font size */
+    font-size: 14px; 
     font-weight: 500;
     transition: 0.2s ease;
 }
 
 .login_form .login_option .option a img {
-    max-width: 22px;  /* Slightly smaller image */
+    max-width: 23px;  
 }
 
 .login_form p {
     text-align: center;
-    font-size: 12px;  /* Reduced font size */
+    font-size: 14px;  
     font-weight: 500;
 }
 
 .login_form .separator {
     position: relative;
-    margin-bottom: 15px;  /* Reduced margin */
+    margin-bottom: 15px;  
 }
 
 /* Login option separator styling */
@@ -83,21 +84,21 @@
 /* Input field styling */
 form .input_box label {
     display: block;
-    font-size: 12px;  /* Reduced font size */
+    font-size: 14px;  
     font-weight: 500;
-    margin-bottom: 4px;  /* Reduced margin */
+    margin-bottom: 6px;  
 }
 
 form .input_box input {
     width: 90%;  /* Full width */
-    height: 40px;  /* Reduced height */
+    height: 42px;  
     border: 1px solid #DADAF2;
     border-radius: 5px;
     outline: none;
     background: #F8F8FB;
-    font-size: 13px;  /* Reduced font size */
-    padding: 0px 16px;  /* Reduced padding */
-    margin-bottom: 15px;  /* Reduced margin */
+    font-size: 14px;  
+    padding: 0px 15px;  
+    margin-bottom: 15px;  
     transition: 0.2s ease;
 }
 
@@ -119,7 +120,7 @@ form .input_box {
 form a {
     text-decoration: none;
     color: #626cd6;
-    font-size: 12px;  /* Reduced font size */
+    font-size: 14px;  
     font-weight: 500;
 }
 
@@ -130,17 +131,17 @@ a:hover {
 /* Login button styling */
 form button {
     width: 100%;
-    height: 40px;  /* Reduced height */
+    height: 42px;  
     border-radius: 5px;
     border: none;
     outline: none;
     background: #626CD6;
     color: #fff;
-    font-size: 14px;  /* Reduced font size */
+    font-size: 16px;  
     font-weight: 500;
     text-transform: uppercase;
     cursor: pointer;
-    margin-bottom: 15px;  /* Reduced margin */
+    margin-bottom: 15px;  
     transition: 0.3s ease;
 }
 
