@@ -27,7 +27,7 @@
 }
 
 .login_form .login_option .option {
-    width: calc(50% - 8px);  /* Slightly reduced gap */
+    width: calc(50% - 8px);
 }
 
 .login_form .login_option .option a {

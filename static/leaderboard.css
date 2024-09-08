@@ -2,33 +2,31 @@
 .leaderboard {
   height: 100%;
   background-color: #f9f9f9;
-  margin: 0 auto;
+  text-align:center;
 }
 
 .leaderboard h2 {
   font-size: 28px;
   color: #333;
-  text-align:center;
-  
-}
 
+  padding:20px 0;
+  margin: 0;
+}
 .leaderboard-table {
   margin: 0 auto;
   width: 80%;
-  
+
+  border-collapse:collapse;
   max-width: 600px;
-  border-collapse: collapse;
 }
 
 .leaderboard-table th,
 .leaderboard-table td {
-  border: 1px solid #ddd;
   padding: 10px;
-  text-align:center;
 }
 
 .leaderboard-table th {
-  background-color: #007bff;
   font-size:18px;
-  color: white;
+  color: #007bff;
+  align-items:center;
 }

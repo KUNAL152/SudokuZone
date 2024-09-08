@@ -1,37 +1,60 @@
-<!-- templates/home.html -->
 {% extends "layout.html" %}
 
 {% block head %}
 <title>Play - Sudoku Lounge</title>
-<link href="/static/play.css" rel="stylesheet" >   
+<link href="/static/play.css" rel="stylesheet">   
 {% endblock %}
   
 {% block content %}
 <div class="container1">
+    
     <div class="sudoku">
-            <canvas id="sudokuBoard" width="451" height="451"></canvas>
+        <!-- Difficulty Selection -->
+        <div class="difficulty-section"><span>
+            <label>Difficulty : <label>
+            <label><input type="radio" name="difficulty" value="easy"> Easy</label>
+            <label><input type="radio" name="difficulty" value="medium"> Medium</label>
+            <label><input type="radio" name="difficulty" value="hard"> Hard</label>
+            <label><input type="radio" name="difficulty" value="expert"> Expert</label>
+            <label><input type="radio" name="difficulty" value="master"> Master</label></span>
+        </div>
+        
+        <!-- Sudoku Board using table -->
+        <table id="sudokuBoard" class="sudoku-board">
+            {% for row in range(9) %}
+            <tr>
+                {% for col in range(9) %}
+                <td data-row="{{ row }}" data-col="{{ col }}" class="cell {% if (row // 3 + col // 3) % 2 == 0 %}grouped{% endif %}">
+                    {% if board[row][col] != 0 %}
+                        {{ board[row][col] }}
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
     </div>
+
+    <!-- Controls Section -->
+    <div class="controls">
+        <!-- Game Stats -->
+        <div class="stats">
+            <span><div>Mistakes: <span id="mistakes">0/3</span></div></span>
+            <span><div>Score: <span id="score">0</span></div></span>
+            <span><div>Timer: <span id="timer">00:00</span></div></span>
+        </div>
     
     <div class="controls">
         <!-- Action buttons -->
         <div class="buttons">
-            <button>Undo</button>
-            <button>Erase</button>
-            <button>Notes</button>
-            <button>Hint</button>
+            <button>Undo</button><button>Erase</button><button>Notes</button><button>Hint</button>
         </div>
 
         <!-- Numpad (1-9) -->
         <div class="numpad">
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
+            <button>1</button><button>2</button><button>3</button>
+            <button>4</button><button>5</button><button>6</button>
+            <button>7</button><button>8</button><button>9</button>
         </div>
 
         <!-- New Game button -->
@@ -40,37 +63,81 @@
         </div>
     </div>
 </div>
+
 <script>
-    // Set up the canvas and context
-    const canvas = document.getElementById('sudokuBoard');
-    const ctx = canvas.getContext('2d');
+    let selectedCell = null;
 
-    const cellSize = 50;  
-    const boardSize = 9;  // 9x9 grid
-    const boardPixelSize = cellSize * boardSize;
+    // Handle cell click
+    document.querySelectorAll('.cell').forEach(cell => {
+        cell.addEventListener('click', function() {
+            document.querySelectorAll('.cell').forEach(c => {
+                c.classList.remove('selected');
+                c.classList.remove('highlight');
+            });
+            this.classList.add('selected');
+            selectedCell = this;
 
-    // Draw the board with all lines
-    function drawSudokuBoard() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);  // Clear canvas before drawing
+            // Get row and column of the selected cell
+            const selectedRow = parseInt(this.dataset.row);
+            const selectedCol = parseInt(this.dataset.col);
 
-        // Draw each cell (1px border for each cell)
-        for (let i = 0; i < boardSize; i++) {
-            for (let j = 0; j < boardSize; j++) {
-                ctx.strokeStyle = "#335AAE";
-                ctx.lineWidth = 0.5;
-                ctx.strokeRect(i * cellSize, j * cellSize, cellSize, cellSize);
+            // Highlight the row, column, and 3x3 grid
+            highlightRowColGrid(selectedRow, selectedCol);
+        });
+    });
+
+    // Highlight the row, column, and 3x3 grid
+    function highlightRowColGrid(row, col) {
+        const cells = document.querySelectorAll('.cell');
+
+        // Highlight the row and column
+        cells.forEach(cell => {
+            const cellRow = parseInt(cell.dataset.row);
+            const cellCol = parseInt(cell.dataset.col);
+
+            if (cellRow === row || cellCol === col) {
+                cell.classList.add('highlight');
             }
-        }
 
-        // Draw the thicker 2px border for the 3x3 sub-grids
-        for (let i = 0; i <= boardSize; i += 3) {
-            ctx.lineWidth = 2;
-            ctx.strokeRect(i * cellSize, 0, 1, boardPixelSize);  // Vertical lines
-            ctx.strokeRect(0, i * cellSize, boardPixelSize, 1);  // Horizontal lines
-        }
+            // Highlight the 3x3 grid
+            const startRow = Math.floor(row / 3) * 3;
+            const startCol = Math.floor(col / 3) * 3;
+
+            if (cellRow >= startRow && cellRow < startRow + 3 && cellCol >= startCol && cellCol < startCol + 3) {
+                cell.classList.add('highlight');
+            }
+        });
     }
 
-    // Call the function to draw the Sudoku board
-    drawSudokuBoard();
+    // Handle numpad button click to fill the cell
+    document.querySelectorAll('.numpad button').forEach(button => {
+        button.addEventListener('click', function() {
+            const num = parseInt(this.innerText);
+            if (selectedCell) {
+                selectedCell.innerText = num;
+
+                // Send the move to the server
+                const row = selectedCell.dataset.row;
+                const col = selectedCell.dataset.col;
+
+                fetch('/submit_move', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        row: row,
+                        col: col,
+                        value: num
+                    })
+                }).then(response => response.json())
+                  .then(data => {
+                      if (!data.success) {
+                          alert('Invalid move');
+                      }
+                  });
+            }
+        });
+    });
 </script>
 {% endblock %}
