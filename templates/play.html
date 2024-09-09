@@ -10,13 +10,13 @@
     
     <div class="sudoku">
         <!-- Difficulty Selection -->
-        <div class="difficulty-section"><span>
-            <label>Difficulty : <label>
-            <label><input type="radio" name="difficulty" value="easy"> Easy</label>
+        <div class="difficulty-section">
+            <label>Difficulty : </label>
+            <label><input type="radio" name="difficulty" value="easy" > Easy</label>
             <label><input type="radio" name="difficulty" value="medium"> Medium</label>
             <label><input type="radio" name="difficulty" value="hard"> Hard</label>
             <label><input type="radio" name="difficulty" value="expert"> Expert</label>
-            <label><input type="radio" name="difficulty" value="master"> Master</label></span>
+            <label><input type="radio" name="difficulty" value="master"> Master</label>
         </div>
         
         <!-- Sudoku Board using table -->
@@ -39,12 +39,8 @@
     <div class="controls">
         <!-- Game Stats -->
         <div class="stats">
-            <span><div>Mistakes: <span id="mistakes">0/3</span></div></span>
-            <span><div>Score: <span id="score">0</span></div></span>
-            <span><div>Timer: <span id="timer">00:00</span></div></span>
+            <div>Mistakes: 0/3</div><div>Score: 0</div><div>00:00</div>
         </div>
-    
-    <div class="controls">
         <!-- Action buttons -->
         <div class="buttons">
             <button>Undo</button><button>Erase</button><button>Notes</button><button>Hint</button>

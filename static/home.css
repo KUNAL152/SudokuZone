@@ -1,8 +1,9 @@
 /* Hero Section */
 .hero {
-  height:80%;
-  background-color: #f0f0f0;
+  display:flex;
   text-align: center;
+  justify-content:center;
+  flex-direction:column;
   padding: 100px;  
 }
 
@@ -16,18 +17,18 @@
   color: #666;
 }
 
-.hero .buttons {
-  margin-top: 20px;
-}
-
 .hero a {
   text-decoration: none;
   padding: 15px 30px;
   font-size: 18px;
-  margin: 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap: 25px;
 }
 
 .play-button {

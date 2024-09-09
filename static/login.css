@@ -3,13 +3,13 @@
 
 /* Login form styling */
 .login_form {
-    height : 91%;
+    height : 92%;
     width: 100%; 
     margin: auto;
     max-width: 375px;
     background: white;
     border-radius: 6px;
-    padding: 25px 15px;
+    padding: 20px 25px;
     box-shadow:0 8px 16px rgba(0, 0, 0, 0.2);  /* Slightly lighter shadow */
 }
 
@@ -59,7 +59,7 @@
 
 .login_form .separator {
     position: relative;
-    margin-bottom: 15px;  
+    margin-bottom:20px;
 }
 
 /* Login option separator styling */
@@ -98,7 +98,7 @@ form .input_box input {
     background: #F8F8FB;
     font-size: 14px;  
     padding: 0px 15px;  
-    margin-bottom: 15px;  
+    margin-bottom: 20px;  
     transition: 0.2s ease;
 }
 

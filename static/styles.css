@@ -18,7 +18,7 @@ html, body {
 header {
     background-color: #232E3F;
     color: #fff;
-    padding: 20px;
+    padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -27,7 +27,7 @@ header {
 
 header h1 {
     margin: 0;
-    font-size: 24px;
+    font-size: 28px;
 }
 
 nav a {
@@ -40,9 +40,10 @@ nav a {
 /* Main Content Styles */
 .main {
     flex: 1;
-    background-color: white;
-    height: 74vh; /* Content area takes up 74% of the viewport height */
-    box-sizing: border-box; /* Ensures padding doesn’t affect height */
+    background-color:white;;
+    height: 75vh; /* Content area takes up 74% of the viewport height */
+    box-sizing: border-box; 
+/* Ensures padding doesn’t affect height */
 }
 
 /* Footer Styles */
@@ -50,8 +51,8 @@ footer {
     background-color: #232E3F;
     color: white;
     text-align: center;
-    padding: 20px;
-    height: 10vh; /* Footer takes 10% of the viewport height */
+    padding: 15px;
+    height: 10vh;
 }
 
 footer a {

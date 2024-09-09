@@ -1,22 +1,22 @@
 .container1 {
+  background-color:white;
   height:100%;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  gap: 20px;
+  align-items: center;
+  gap: 30px;
   margin: 0 auto;
   
 }
 
 .difficulty-section {
   display: flex;
-  margin:10px 0;
-  flex-direction: column;
+  margin-bottom:10px;
+  justify-content:space-between;
 }
 
 .difficulty-section label {
-  font-size: 15px;
-  margin-right:10px;
+  font-size: 16px;
 }
 
 .sudoku-board {
@@ -53,20 +53,22 @@
 
 .stats {
   display: flex;
-  justify-content: space-between;
-  /* margin-top:10px 0; */
+  width:100%;
+  margin: 10px 0;
+  gap:43px;
+  
 }
 
 .stats div {
   font-size: 16px;
-  margin: 15px 0 10px 0;
   font-weight:600;
   color: #344960;
 }
 
 .buttons {
+  width:100%;
   display: flex;
-  gap: 10px;
+  gap: 15px;
 }
 
 .buttons button {
@@ -94,8 +96,8 @@
   width: 90px;
   height: 90px;
   font-size: 42px;
-  background-color: #EAEEF4;
-  color: #325aaf;
+  background-color: #caf0f8;
+  color: #023e8a;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -103,7 +105,7 @@
 }
 
 .numpad button:hover {
-  background-color: #d0d8f1;
+  background-color: #90e0ef;
 }
 
 .new-game {
