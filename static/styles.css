@@ -4,34 +4,25 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: white;
 }
-
-/* Container for flexbox layout */
-.container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
 /* Header Styles */
 header {
-    background-color: #232E3F;
-    color: #fff;
-    padding: 20px 40px;
+    padding: 20px 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
-    height: 5vh; /* Header takes 5% of the viewport height */
+    height: 5vh;
+    border-bottom: 1px solid rgba(0, 63, 123, .2);    
 }
 
-header h1 {
-    margin: 0;
+header h1 a {
+    margin: 0 ;
     font-size: 28px;
 }
 
 nav a {
-    color: white;
+    color: #232E3F;
     text-decoration: none;
     margin-left: 15px;
     font-size: 16px;
@@ -40,8 +31,10 @@ nav a {
 /* Main Content Styles */
 .main {
     flex: 1;
+    width:80%;
+    margin:0 auto;
     background-color:white;;
-    height: 75vh; /* Content area takes up 74% of the viewport height */
+    height: 75vh; 
     box-sizing: border-box; 
 /* Ensures padding doesn’t affect height */
 }

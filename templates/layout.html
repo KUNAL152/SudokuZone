@@ -8,26 +8,26 @@
         <title>Sudoku Lounge</title>
     {% endblock %}
     <link href="/static/styles.css" rel="stylesheet" >   
-</head>
+</head> 
 
 <body>
-    
-    <!-- Header -->
-    <header>
-        <h1><a href="/" style="text-decoration:none;color:white;">Sudoku Lounge</a></h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/login">Login</a>
-            <a href="/play">Play as Guest</a>
-            <a href="/leaderboard">Leaderboard</a>
-        </nav>
-    </header>
-    
-    <!-- Main Content -->
-    <div class="main">
-        {% block content %}
-        {% endblock %}
-    </div>
+        <!-- Header -->
+        <header>
+            <h1>
+                <a href="/" style="text-decoration:none;    color: #232E3F">Sudoku Lounge</a>
+            </h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/login">Login</a>
+                <a href="/play">Play as Guest</a>
+                <a href="/leaderboard">Leaderboard</a>
+            </nav>
+        </header>
+        <!-- Main Content -->
+        <div class="main">
+            {% block content %}
+            {% endblock %}
+        </div>
         
     <!-- Footer -->
     <footer>
