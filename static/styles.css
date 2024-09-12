@@ -8,35 +8,31 @@ html, body {
 }
 /* Header Styles */
 header {
-    padding: 20px 0;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    height: 5vh;
+    height: 10vh;
     border-bottom: 1px solid rgba(0, 63, 123, .2);    
 }
-.menu-icon{
-    display:none;
-    cursor: pointer;
+header h1{
+    margin: 0 8vw;
 }
 header h1 a {
-    margin: 0;
+    text-decoration:none;
+    color: #232E3F;
     font-size: 28px;
 }
-
-nav ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
+header nav{
+    margin:0 5vw;
+    display:flex;
+    gap:5vw;
 }
-
 nav a {
     color: #232E3F;
     text-decoration: none;
-    margin-left: 15px;
     font-size: 16px;
-} 
+}
 
 /* Main Content Styles */
 .main {
@@ -54,7 +50,7 @@ footer {
     background-color: #232E3F;
     color: white;
     text-align: center;
-    padding: 15px;
+    padding: 17px;
     height: 10vh;
 }
 

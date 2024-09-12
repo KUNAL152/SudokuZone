@@ -6,17 +6,19 @@
 {% endblock %}
   
 {% block content %}
-<div class="container1">
+<div class="container">
     
     <div class="sudoku">
         <!-- Difficulty Selection -->
         <div class="difficulty-section">
-            <label>Difficulty : </label>
-            <label><input type="radio" name="difficulty" value="easy" > Easy</label>
-            <label><input type="radio" name="difficulty" value="medium"> Medium</label>
-            <label><input type="radio" name="difficulty" value="hard"> Hard</label>
-            <label><input type="radio" name="difficulty" value="expert"> Expert</label>
-            <label><input type="radio" name="difficulty" value="master"> Master</label>
+            Difficulty:
+            <nav>
+                <a href="/play">Easy</a>
+                <a href="/play">Medium</a>
+                <a href="/play">Hard</a>
+                <a href="/play">Expert</a>
+                <a href="/play">Master</a>
+            </nav>
         </div>
         
         <!-- Sudoku Board using table -->
