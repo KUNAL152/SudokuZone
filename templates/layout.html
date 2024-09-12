@@ -14,13 +14,15 @@
         <!-- Header -->
         <header>
             <h1>
-                <a href="/" style="text-decoration:none;    color: #232E3F">Sudoku Lounge</a>
+                <span class="menu-icon" onclick="toggleMenu()">☰</span>
+                <a href="/" style="text-decoration:none;color: #232E3F">Sudoku Lounge</a>
             </h1>
-            <nav>
-                <a href="/">Home</a>
-                <a href="/login">Login</a>
-                <a href="/play">Play as Guest</a>
-                <a href="/leaderboard">Leaderboard</a>
+            <nav class="main-navigation">
+                <ul id="nav-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/play">Play as Guest</a></li>
+                    <li><a href="/leaderboard">Leaderboard</a></li>
             </nav>
         </header>
         <!-- Main Content -->
@@ -37,5 +39,14 @@
         <a href="#">Contact Us</a>
     </footer>
 </body>
-
+<script>
+    function toggleMenu() {
+        var navLinks = document.getElementById('nav-links');
+        if (navLinks.style.display === 'flex') {
+            navLinks.style.display = 'none';
+        } else {
+            navLinks.style.display = 'flex';
+        }
+    }
+</script>
 </html>

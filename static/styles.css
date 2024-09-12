@@ -15,10 +15,20 @@ header {
     height: 5vh;
     border-bottom: 1px solid rgba(0, 63, 123, .2);    
 }
-
+.menu-icon{
+    display:none;
+    cursor: pointer;
+}
 header h1 a {
-    margin: 0 ;
+    margin: 0;
     font-size: 28px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
 }
 
 nav a {
@@ -26,7 +36,7 @@ nav a {
     text-decoration: none;
     margin-left: 15px;
     font-size: 16px;
-}
+} 
 
 /* Main Content Styles */
 .main {
