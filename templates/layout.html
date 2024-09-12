@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% block head %}
-        <title>Sudoku Lounge</title>
+        <title>SudokuZone</title>
     {% endblock %}
     <link href="/static/styles.css" rel="stylesheet" >   
 </head> 
@@ -14,12 +14,12 @@
     <!-- Header -->
     <header>
         <h1>
-            <a href="/">Sudoku Lounge</a>
+            <a href="/">SudokuZone</a>
         </h1>
         <nav>
             <a href="/">Home</a>
             <a href="/login">Login</a>
-            <a href="/play">Play</a>
+            <a href="/play?difficulty=easy">Play</a>
             <a href="/leaderboard">Leaderboard</a>
         </nav>
     </header>
@@ -31,7 +31,7 @@
         
     <!-- Footer -->
     <footer>
-        <p>&copy;2024 Sudoku Lounge. All Rights Reserved.</p>
+        <p>&copy;2024 SudokuZone. All Rights Reserved.</p>
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Service</a>
         <a href="#">Contact Us</a>

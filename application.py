@@ -3,7 +3,7 @@ import random
 
 app = Flask(__name__)
 
-def generate_sudoku():
+def generate_sudoku(remove_count):
     board = [[0]*9 for _ in range(9)]
     # Randomly fill diagonal 3x3 grids to ensure validity
     for i in range(0, 9, 3):
@@ -11,7 +11,7 @@ def generate_sudoku():
     # Solve the board (simple backtracking to fill it completely)
     solve(board)
     # Remove some cells to create a puzzle
-    remove_cells(board, 40)  # Remove 40 cells (adjust difficulty by changing this number)
+    remove_cells(board, remove_count)  
     return board
 
 def fill_3x3(board, row, col):
@@ -58,7 +58,18 @@ def index():
 
 @app.route('/play')
 def play():
-    board = generate_sudoku()
+    difficulty = request.args.get('difficulty', 'easy')
+    if difficulty == 'easy':
+        remove_count = random.randint(40,44)
+    elif difficulty == 'medium':
+        remove_count = random.randint(43,47)
+    elif difficulty == 'hard':
+        remove_count = random.randint(46,50)
+    elif difficulty == 'expert':
+        remove_count = random.randint(49,53)
+    else:
+        remove_count = random.randint(52,56)
+    board = generate_sudoku(remove_count)
     return render_template('play.html', board=board)
 
 @app.route('/submit_move', methods=['POST'])

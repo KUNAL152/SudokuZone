@@ -16,7 +16,7 @@ header {
     border-bottom: 1px solid rgba(0, 63, 123, .2);    
 }
 header h1{
-    margin: 0 8vw;
+    padding:0 50px;
 }
 header h1 a {
     text-decoration:none;
@@ -24,9 +24,9 @@ header h1 a {
     font-size: 28px;
 }
 header nav{
-    margin:0 5vw;
+    padding:0 30px;
     display:flex;
-    gap:5vw;
+    gap:20px;
 }
 nav a {
     color: #232E3F;

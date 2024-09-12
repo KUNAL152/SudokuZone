@@ -13,11 +13,11 @@
         <div class="difficulty-section">
             Difficulty:
             <nav>
-                <a href="/play">Easy</a>
-                <a href="/play">Medium</a>
-                <a href="/play">Hard</a>
-                <a href="/play">Expert</a>
-                <a href="/play">Master</a>
+                <a href="/play?difficulty=easy" class="difficulty-button">Easy</a>
+                <a href="/play?difficulty=medium" class="difficulty-button">Medium</a>
+                <a href="/play?difficulty=hard" class="difficulty-button">Hard</a>
+                <a href="/play?difficulty=expert" class="difficulty-button">Expert</a>
+                <a href="/play?difficulty=master" class="difficulty-button">Master</a>
             </nav>
         </div>
         
@@ -44,10 +44,12 @@
             <div>Mistakes: 0/3</div><div>Score: 0</div><div>00:00</div>
         </div>
         <!-- Action buttons -->
-        <div class="buttons">
-            <button>Undo</button><button>Erase</button><button>Notes</button><button>Hint</button>
+        <div class="actions">
+            <img src="/static/images/undo.svg" alt="Undo">
+            <img src="/static/images/erase.svg" alt="Erase">
+            <img src="/static/images/pencil.svg" alt="Note">
+            <img src="/static/images/hint.svg" alt="Hint">
         </div>
-
         <!-- Numpad (1-9) -->
         <div class="numpad">
             <button>1</button><button>2</button><button>3</button>
@@ -57,8 +59,9 @@
 
         <!-- New Game button -->
         <div class="new-game">
-            New Game
+            <a href="/play?difficulty=easy"style="text-decoration:none;color:white"> New Game</a>
         </div>
+    </div>
     </div>
 </div>
 
