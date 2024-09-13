@@ -59,16 +59,36 @@
   border-top: 2px solid #023e8a;
 }
 
+
 .cell.selected {
-  background-color: #ffeb3b; /* Yellow for selected cell */
+  background-color: #bde0fe; /* Blue for selected cell */
 }
 
 .cell.highlight {
-  background-color: #e0e0e0; /* Grey for highlighted row, column, and 3x3 grid */
+  background-color: #dee2e6; /* Grey for highlighted cells */
 }
 
 .cell.selected.highlight {
-  background-color: #ffeb3b; /* Ensure selected cell stays yellow */
+  background-color: #bde0fe; /* Same as .selected to avoid color clash */
+}
+
+.cell.incorrect {
+  background-color: #ffcad4; /* Red for incorrect input */
+  color: red;
+}
+
+.cell.same-num {
+  background-color: #caf0f8; /* Light blue for cells with the same number */
+}
+
+.cell.highlight.same-num {
+  background-color: #caf0f8; /* Light blue takes precedence over highlight */
+  color: inherit; /* Ensure text color remains consistent */
+}
+
+.cell.incorrect.same-num {
+  background-color: #ffcad4; /* Red for incorrect cells with the same number */
+  color: red; /* Ensure text color remains red for incorrect cells */
 }
 
 .controls {

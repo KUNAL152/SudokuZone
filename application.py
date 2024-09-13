@@ -10,9 +10,11 @@ def generate_sudoku(remove_count):
         fill_3x3(board, i, i)
     # Solve the board (simple backtracking to fill it completely)
     solve(board)
+    # Copy the solution before removing cells
+    solution = [row[:] for row in board]
     # Remove some cells to create a puzzle
     remove_cells(board, remove_count)  
-    return board
+    return board, solution
 
 def fill_3x3(board, row, col):
     nums = list(range(1, 10))
@@ -69,8 +71,8 @@ def play():
         remove_count = random.randint(49,53)
     else:
         remove_count = random.randint(52,56)
-    board = generate_sudoku(remove_count)
-    return render_template('play.html', board=board)
+    board, solution = generate_sudoku(remove_count)
+    return render_template('play.html', board=board, solution=solution)
 
 @app.route('/submit_move', methods=['POST'])
 def submit_move():

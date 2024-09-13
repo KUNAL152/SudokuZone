@@ -2,7 +2,7 @@
 
 {% block head %}
 <title>Play - Sudoku Lounge</title>
-<link href="/static/play.css" rel="stylesheet">   
+<link href="/static/css/play.css" rel="stylesheet">   
 {% endblock %}
   
 {% block content %}
@@ -67,17 +67,23 @@
 
 <script>
     let selectedCell = null;
-
+    const solution = {{ solution|tojson }};
+    
     // Handle cell click
     document.querySelectorAll('.cell').forEach(cell => {
         cell.addEventListener('click', function() {
             document.querySelectorAll('.cell').forEach(c => {
                 c.classList.remove('selected');
                 c.classList.remove('highlight');
+                c.classList.remove('same-num');
             });
+            
+            const num = parseInt(this.innerText);
+            highlightSameNumber(num);
+            
             this.classList.add('selected');
             selectedCell = this;
-
+            
             // Get row and column of the selected cell
             const selectedRow = parseInt(this.dataset.row);
             const selectedCol = parseInt(this.dataset.col);
@@ -107,6 +113,7 @@
             if (cellRow >= startRow && cellRow < startRow + 3 && cellCol >= startCol && cellCol < startCol + 3) {
                 cell.classList.add('highlight');
             }
+            
         });
     }
 
@@ -117,10 +124,16 @@
             if (selectedCell) {
                 selectedCell.innerText = num;
 
-                // Send the move to the server
                 const row = selectedCell.dataset.row;
                 const col = selectedCell.dataset.col;
 
+                if (solution[row][col] === num) {
+                    selectedCell.innerText = num;
+                    selectedCell.classList.remove('incorrect'); 
+                } else {
+                    selectedCell.classList.add('incorrect'); 
+                }
+                
                 fetch('/submit_move', {
                     method: 'POST',
                     headers: {
@@ -137,8 +150,22 @@
                           alert('Invalid move');
                       }
                   });
+                highlightSameNumber(num);
             }
         });
     });
+    // Highlight the same number in the board;
+    function highlightSameNumber(num){
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            const cellNum = parseInt(cell.innerText);
+            if(cellNum === num){
+                
+                cell.classList.add('same-num');
+            }
+        });
+    }
+    
+
 </script>
 {% endblock %}
