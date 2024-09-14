@@ -1,8 +1,7 @@
-from flask import Flask, render_template, jsonify, request, session
+from flask import Flask, render_template, request, jsonify
 import random
 
 app = Flask(__name__)
-app.secret_key = '14112002'
 
 
 
@@ -13,11 +12,9 @@ def generate_sudoku(remove_count):
         fill_3x3(board, i, i)
     # Solve the board (simple backtracking to fill it completely)
     solve(board)
-    # Copy the solution before removing cells
-    solution = [row[:] for row in board]
     # Remove some cells to create a puzzle
     remove_cells(board, remove_count)  
-    return board, solution
+    return board
 
 def fill_3x3(board, row, col):
     nums = list(range(1, 10))
@@ -60,6 +57,13 @@ def remove_cells(board, count):
 @app.route('/')
 def index():
     return render_template('home.html')
+@app.route('/leaderboard')
+def lead():
+      return render_template('leaderboard.html')
+
+@app.route('/login')
+def login():
+      return render_template('login.html')
 
 @app.route('/play')
 def play():
@@ -74,57 +78,10 @@ def play():
         remove_count = random.randint(49,53)
     else:
         remove_count = random.randint(52,56)
-    board,solution = generate_sudoku(remove_count)
-    session['board'] = board
-    session['solution'] = solution
-    session['history'] = [board]
-    
-    return render_template('play.html', board=board, solution=solution)
 
+    board = generate_sudoku(remove_count)
 
-@app.route('/submit_move', methods=['POST'])
-def submit_move():
-        data = request.get_json()
-        row = int(data['row'])
-        col = int(data['col'])
-        value = int(data['value'])
-
-        board = session.get('board')
-        solution = session.get('solution')
-        history = session.get('history', [])
-
-        if board[row][col] == 0 and solution[row][col] == value:
-            # Save the current board state to the history stack before updating
-            history.append(copy.deepcopy(board))  # Use deep copy here
-            session['history'] = history
-
-            # Update the board with the correct move
-            board[row][col] = value
-            session['board'] = board
-            return jsonify(success=True, message="Correct move!")
-        else:
-            return jsonify(success=False, message="Incorrect move.")
-
-@app.route('/undo_move', methods=['POST'])
-def undo_move():
-    history = session.get('history', [])
-    if len(history) > 1:
-        # Remove the latest state and revert to the previous one
-        history.pop()
-        board = history[-1]  # Get the last state after popping
-        session['board'] = board
-        session['history'] = history
-        return jsonify(success=True, board=board)
-    else:
-        return jsonify(success=False, message="No moves to undo.")
-
-@app.route('/leaderboard')
-def lead():
-  return render_template('leaderboard.html')
-
-@app.route('/login')
-def login():
-  return render_template('login.html')
+    return render_template('play.html',board=board)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
