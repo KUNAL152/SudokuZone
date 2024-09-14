@@ -59,36 +59,32 @@
   border-top: 2px solid #023e8a;
 }
 
-
-.cell.selected {
-  background-color: #bde0fe; /* Blue for selected cell */
+.current.not-in{
+  background-color:#90e0ef;
+}
+.not-in{
+  background-color:#fdfcdc;
+}
+.same-num{
+  background-color:#b9f6ca;
 }
 
-.cell.highlight {
-  background-color: #dee2e6; /* Grey for highlighted cells */
-}
-
-.cell.selected.highlight {
-  background-color: #bde0fe; /* Same as .selected to avoid color clash */
-}
-
-.cell.incorrect {
-  background-color: #ffcad4; /* Red for incorrect input */
+.same-num.not-in{
+  background-color: #ffc2d1;
   color: red;
 }
-
-.cell.same-num {
-  background-color: #caf0f8; /* Light blue for cells with the same number */
+.same-num.current.not-in{
+  background-color:#90e0ef;
+  color: black;
 }
-
-.cell.highlight.same-num {
-  background-color: #caf0f8; /* Light blue takes precedence over highlight */
-  color: inherit; /* Ensure text color remains consistent */
+.same-num.current.not-in.wrong{
+  background-color: #ffb3c1;
+  color: red;
+  
 }
-
-.cell.incorrect.same-num {
-  background-color: #ffcad4; /* Red for incorrect cells with the same number */
-  color: red; /* Ensure text color remains red for incorrect cells */
+.wrong{
+  background-color: #ffc2d1;
+  color: red;
 }
 
 .controls {
@@ -99,11 +95,12 @@
 
 .stats {
   display: flex;
+  justify-content:space-between;
   width:100%;
 }
 
 .stats div {
-  padding: 5px 14px;
+  padding: 6px 0;
   font-size: 16px;
   font-weight:600;
   color: #344960;
@@ -115,9 +112,11 @@
   justify-content:space-between;
 }
 .actions img{
-  height:45px;
-  width:45px;
-  margin: 5px 10px;
+  height:50px;
+  width:50px;
+}
+.actions img:hover{
+  cursor:pointer;
 }
 
 .numpad {
@@ -140,6 +139,7 @@
 } 
 
 .numpad button:hover {
+  border: 1px solid black;
   background-color: #90e0ef;
 }
 

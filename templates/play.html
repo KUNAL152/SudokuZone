@@ -2,7 +2,7 @@
 
 {% block head %}
 <title>Play - Sudoku Lounge</title>
-<link href="/static/css/play.css" rel="stylesheet">   
+<link href="/static/css/play.css" rel="stylesheet">  
 {% endblock %}
   
 {% block content %}
@@ -26,7 +26,7 @@
             {% for row in range(9) %}
             <tr>
                 {% for col in range(9) %}
-                <td data-row="{{ row }}" data-col="{{ col }}" class="cell {% if (row // 3 + col // 3) % 2 == 0 %}grouped{% endif %}">
+                <td data-row="{{ row }}" data-col="{{ col }}" class="cell">
                     {% if board[row][col] != 0 %}
                         {{ board[row][col] }}
                     {% endif %}
@@ -45,8 +45,8 @@
         </div>
         <!-- Action buttons -->
         <div class="actions">
-            <img src="/static/images/undo.svg" alt="Undo">
-            <img src="/static/images/erase.svg" alt="Erase">
+            <img src="/static/images/undo.svg" alt="Undo" id="undo-btn">
+            <img src="/static/images/erase.svg" alt="Erase"id="erase-btn">
             <img src="/static/images/pencil.svg" alt="Note">
             <img src="/static/images/hint.svg" alt="Hint">
         </div>
@@ -59,31 +59,35 @@
 
         <!-- New Game button -->
         <div class="new-game">
-            <a href="/play?difficulty=easy"style="text-decoration:none;color:white"> New Game</a>
+            <a href="/play?difficulty={{ request.args.get('difficulty', 'easy') }}" style="text-decoration:none;color:white"> New Game</a>
+
         </div>
     </div>
     </div>
 </div>
+{% endblock %}
 
+{% block script %}
 <script>
     let selectedCell = null;
     const solution = {{ solution|tojson }};
-    
+
     // Handle cell click
     document.querySelectorAll('.cell').forEach(cell => {
         cell.addEventListener('click', function() {
             document.querySelectorAll('.cell').forEach(c => {
-                c.classList.remove('selected');
-                c.classList.remove('highlight');
+                c.classList.remove('current');
+                c.classList.remove('not-in');
                 c.classList.remove('same-num');
+
             });
-            
+
             const num = parseInt(this.innerText);
             highlightSameNumber(num);
-            
-            this.classList.add('selected');
+
+            this.classList.add('current');
             selectedCell = this;
-            
+
             // Get row and column of the selected cell
             const selectedRow = parseInt(this.dataset.row);
             const selectedCol = parseInt(this.dataset.col);
@@ -96,14 +100,13 @@
     // Highlight the row, column, and 3x3 grid
     function highlightRowColGrid(row, col) {
         const cells = document.querySelectorAll('.cell');
-
         // Highlight the row and column
         cells.forEach(cell => {
             const cellRow = parseInt(cell.dataset.row);
             const cellCol = parseInt(cell.dataset.col);
 
             if (cellRow === row || cellCol === col) {
-                cell.classList.add('highlight');
+                cell.classList.add('not-in');
             }
 
             // Highlight the 3x3 grid
@@ -111,9 +114,23 @@
             const startCol = Math.floor(col / 3) * 3;
 
             if (cellRow >= startRow && cellRow < startRow + 3 && cellCol >= startCol && cellCol < startCol + 3) {
-                cell.classList.add('highlight');
+                cell.classList.add('not-in');
             }
-            
+
+        });
+    }
+
+    // Highlight the same number in the board;
+    function highlightSameNumber(num){
+        const cells = document.querySelectorAll('.cell');
+        document.querySelectorAll('.cell').forEach(c => {
+            c.classList.remove('same-num');
+        });
+        cells.forEach(cell => {
+            const cellNum = parseInt(cell.innerText);
+            if(cellNum === num){
+                cell.classList.add('same-num');
+            }
         });
     }
 
@@ -129,11 +146,11 @@
 
                 if (solution[row][col] === num) {
                     selectedCell.innerText = num;
-                    selectedCell.classList.remove('incorrect'); 
+                    selectedCell.classList.remove('wrong'); 
                 } else {
-                    selectedCell.classList.add('incorrect'); 
+                    selectedCell.classList.add('wrong'); 
                 }
-                
+
                 fetch('/submit_move', {
                     method: 'POST',
                     headers: {
@@ -154,18 +171,56 @@
             }
         });
     });
-    // Highlight the same number in the board;
-    function highlightSameNumber(num){
-        const cells = document.querySelectorAll('.cell');
-        cells.forEach(cell => {
-            const cellNum = parseInt(cell.innerText);
-            if(cellNum === num){
-                
-                cell.classList.add('same-num');
+
+    // Handle Mistakes
+    let mistakes = 0;
+    .then(data => {
+        if (data.success) {
+            selectedCell.innerText = num;
+            selectedCell.classList.remove('wrong');
+        } else {
+            selectedCell.classList.add('wrong');
+            mistakes += 1;
+            document.querySelector('.stats div:first-child').innerText = `Mistakes: ${mistakes}/3`;
+            if (mistakes >= 3) {
+                alert('Game Over! Too many mistakes.');
+            }
+        }
+    });
+
+    // Handle timer
+    let seconds = 0;
+    let timer = setInterval(function() {
+        seconds++;
+        const minutes = Math.floor(seconds / 60);
+        const displaySeconds = seconds % 60;
+        document.querySelector('.stats div:last-child').innerText = 
+            `${minutes < 10 ? '0' : ''}${minutes}:${displaySeconds < 10 ? '0' : ''}${displaySeconds}`;
+    }, 1000);
+
+    // Handle undo 
+    document.getElementById('undo-btn').addEventListener('click', function() {
+        fetch('/undo_move', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update the board with the previous state
+                const board = data.board;
+                const cells = document.querySelectorAll('.cell');
+                cells.forEach(cell => {
+                    const row = parseInt(cell.dataset.row);
+                    const col = parseInt(cell.dataset.col);
+                    cell.innerText = board[row][col] !== 0 ? board[row][col] : '';
+                });
+            } else {
+                alert(data.message || 'No moves to undo.');
             }
         });
-    }
-    
-
-</script>
+    });
+</script> 
 {% endblock %}
