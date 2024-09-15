@@ -1,14 +1,16 @@
 <!-- templates/layout.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico') }}">
     {% block head %}
-        <title>SudokuZone</title>
+    <title>SudokuZone</title>
     {% endblock %}
-    <link href="/static/css/styles.css" rel="stylesheet" >   
-</head> 
+    <link href="/static/css/styles.css" rel="stylesheet">
+</head>
 
 <body>
     <!-- Header -->
@@ -28,7 +30,7 @@
         {% block content %}
         {% endblock %}
     </div>
-        
+
     <!-- Footer -->
     <footer>
         <p>&copy;2024 SudokuZone. All Rights Reserved.</p>

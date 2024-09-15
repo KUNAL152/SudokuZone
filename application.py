@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, jsonify
 import random
 
 app = Flask(__name__)
+
+# Initialize sudoku-board
 board = [[0]*9 for _ in range(9)]
 
 def generate_sudoku(remove_count):
@@ -86,9 +88,11 @@ def validate_cell():
     row = data['row']
     col = data['col']
     number = data['number']
+
+    # Solve the board for checking move
     solve(board)
     correct_number = board[row][col]
-    print(correct_number)
+
     # Compare user input with the correct solution
     if number == correct_number:
         return jsonify({'correct': True})
