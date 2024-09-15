@@ -77,6 +77,10 @@
   background-color:#90e0ef;
   color: black;
 }
+.current.not-in.wrong{
+  background-color: #ffb3c1;
+  color: red;
+}
 .same-num.current.not-in.wrong{
   background-color: #ffb3c1;
   color: red;

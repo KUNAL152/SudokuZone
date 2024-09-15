@@ -2,11 +2,9 @@ from flask import Flask, render_template, request, jsonify
 import random
 
 app = Flask(__name__)
-
-
+board = [[0]*9 for _ in range(9)]
 
 def generate_sudoku(remove_count):
-    board = [[0]*9 for _ in range(9)]
     # Randomly fill diagonal 3x3 grids to ensure validity
     for i in range(0, 9, 3):
         fill_3x3(board, i, i)
@@ -80,8 +78,22 @@ def play():
         remove_count = random.randint(52,56)
 
     board = generate_sudoku(remove_count)
-
     return render_template('play.html',board=board)
 
+@app.route('/validate', methods=['POST'])
+def validate_cell():
+    data = request.get_json()
+    row = data['row']
+    col = data['col']
+    number = data['number']
+    solve(board)
+    correct_number = board[row][col]
+    print(correct_number)
+    # Compare user input with the correct solution
+    if number == correct_number:
+        return jsonify({'correct': True})
+    else:
+        return jsonify({'correct': False})
+        
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
