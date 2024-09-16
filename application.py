@@ -7,21 +7,9 @@ app = Flask(__name__)
 board = [[0]*9 for _ in range(9)]
 
 def generate_sudoku(remove_count):
-    # Randomly fill diagonal 3x3 grids to ensure validity
-    for i in range(0, 9, 3):
-        fill_3x3(board, i, i)
-    # Solve the board (simple backtracking to fill it completely)
     solve(board)
-    # Remove some cells to create a puzzle
     remove_cells(board, remove_count)  
     return board
-
-def fill_3x3(board, row, col):
-    nums = list(range(1, 10))
-    random.shuffle(nums)
-    for i in range(3):
-        for j in range(3):
-            board[row + i][col + j] = nums.pop()
 
 def is_valid(board, row, col, num):
     for i in range(9):
@@ -48,11 +36,12 @@ def solve(board):
     return True
 
 def remove_cells(board, count):
-    for _ in range(count):
-        row, col = random.randint(0, 8), random.randint(0, 8)
-        while board[row][col] == 0:
-            row, col = random.randint(0, 8), random.randint(0, 8)
+    cells = [(row, col) for row in range(9) for col in range(9)]
+    random.shuffle(cells)
+    for i in range(count):
+        row, col = cells[i]
         board[row][col] = 0
+
 
 @app.route('/')
 def index():
@@ -67,20 +56,27 @@ def login():
 
 @app.route('/play')
 def play():
+    remove_count = 0 
     difficulty = request.args.get('difficulty', 'easy')
-    if difficulty == 'easy':
-        remove_count = random.randint(40,44)
-    elif difficulty == 'medium':
-        remove_count = random.randint(43,47)
-    elif difficulty == 'hard':
-        remove_count = random.randint(46,50)
+    if difficulty == 'master':
+        remove_count = random.randint(52, 56)
     elif difficulty == 'expert':
-        remove_count = random.randint(49,53)
-    else:
-        remove_count = random.randint(52,56)
+        remove_count = random.randint(49, 53)
+    elif difficulty == 'hard':
+        remove_count = random.randint(46, 50)
+    elif difficulty == 'medium':
+        remove_count = random.randint(43, 47)
+    elif difficulty == 'easy':
+        remove_count = random.randint(40, 44)
 
     board = generate_sudoku(remove_count)
-    return render_template('play.html',board=board)
+
+    # Debugging: print or log board to check if it's generated correctly
+    print(f'Difficulty: {difficulty}, Remove Count: {remove_count}')
+    print('Generated board:', board)
+
+    return render_template('play.html', board=board)
+
 
 @app.route('/validate', methods=['POST'])
 def validate_cell():

@@ -41,6 +41,9 @@
   border: 1px solid #023e8a;  /* Regular cell borders */
   font-size: 32px;
 }
+.sudoku-board td{
+  cursor:default;
+}
 
 /* Thicker borders for the 3x3 grid boundaries */
 .sudoku-board td:nth-child(3n) {
@@ -144,7 +147,12 @@
 
 .numpad button:hover {
   border: 1px solid black;
-  background-color: #90e0ef;
+  background-color: #90e0ef
+  cursor: default;
+}
+.numpad button:disabled{
+  background-color: #ced4da;
+  color: #343a40;
 }
 
 .new-game {

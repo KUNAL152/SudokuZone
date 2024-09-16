@@ -15,11 +15,9 @@ document.querySelectorAll('.cell').forEach(cell => {
 });
 
 function erase() {
-    if (selectedCell) {
-        const value = parseInt(selectedCell.innerText);
+    if (selectedCell && !selectedCell.classList.contains('pre-filled')) {
         document.querySelectorAll('.cell').forEach(c => {
-            const num = parseInt(c.innerText);
-            if(num === value){
+            if(c === selectedCell){
                 c.classList.remove('wrong');
             }
             c.classList.remove('current');
@@ -31,6 +29,48 @@ function erase() {
     }   
 }
 
+function disable(num) {
+    let count = 0
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        const cellNum = parseInt(cell.innerText);
+        if (cellNum === num){
+            count++;
+        }
+        if(count === 9){
+            const buttons = document.querySelectorAll('.numpad button');
+            buttons.forEach(btn => {
+                const number = parseInt(btn.innerText);
+                if(num === number){
+                    btn.disabled = true;
+                }
+            });  
+        }
+    });
+}
+
+// Highlight the row, column, and 3x3 grid
+function highlight(row, col, num) {
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        const cellRow = parseInt(cell.dataset.row);
+        const cellCol = parseInt(cell.dataset.col);
+        const cellNum = parseInt(cell.innerText);
+        if (cellNum === num){
+            cell.classList.add('same-num');
+        }
+        if (cellRow === row || cellCol === col) {
+            cell.classList.add('not-in');
+        }
+        // Highlight the 3x3 grid
+        const startRow = Math.floor(row / 3) * 3;
+        const startCol = Math.floor(col / 3) * 3;
+        if (cellRow >= startRow && cellRow < startRow + 3 && cellCol >= startCol && cellCol < startCol + 3) {
+            cell.classList.add('not-in');
+        }
+    });
+}
+
 // Function to check if the current cell is valid
 document.querySelectorAll('.cell').forEach(cell => {
     cell.addEventListener('click', function() {
@@ -39,11 +79,8 @@ document.querySelectorAll('.cell').forEach(cell => {
             c.classList.remove('not-in');
             c.classList.remove('same-num');
         });
-
         this.classList.add('current');
         selectedCell = this;
-
-        // Get row and column of the selected cell
         const selectedRow = parseInt(this.dataset.row);
         const selectedCol = parseInt(this.dataset.col);
         const num = parseInt(this.innerText);
@@ -51,38 +88,10 @@ document.querySelectorAll('.cell').forEach(cell => {
     });
 });
 
-// Highlight the row, column, and 3x3 grid
-function highlight(row, col, num) {
-    const cells = document.querySelectorAll('.cell');
-    // Highlight the row and column
-    cells.forEach(cell => {
-        const cellRow = parseInt(cell.dataset.row);
-        const cellCol = parseInt(cell.dataset.col);
-        const cellNum = parseInt(cell.innerText);
-
-        if (cellNum === num){
-            cell.classList.add('same-num');
-        }
-
-        if (cellRow === row || cellCol === col) {
-            cell.classList.add('not-in');
-        }
-
-        // Highlight the 3x3 grid
-        const startRow = Math.floor(row / 3) * 3;
-        const startCol = Math.floor(col / 3) * 3;
-
-        if (cellRow >= startRow && cellRow < startRow + 3 && cellCol >= startCol && cellCol < startCol + 3) {
-            cell.classList.add('not-in');
-        }
-    });
-}
-
 document.querySelectorAll('.numpad button').forEach(btn => {
     btn.addEventListener('click', function() {
         const num = parseInt(this.innerText);
-        if (selectedCell) {
-            selectedCell.innerText = num;
+        if (selectedCell && !selectedCell.classList.contains('pre-filled')){
             const row = parseInt(selectedCell.dataset.row);
             const col = parseInt(selectedCell.dataset.col);
 
@@ -99,7 +108,9 @@ document.querySelectorAll('.numpad button').forEach(btn => {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+                selectedCell.innerText = num;
+                disable(num);
+                highlight(row,col,num);
                 if (data.correct) {
                     selectedCell.classList.remove('wrong');  
                 } else {
