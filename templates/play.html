@@ -26,7 +26,7 @@
             {% for row in range(9) %}
             <tr>
                 {% for col in range(9) %}
-                    <td data-row="{{ row }}" data-col="{{ col }}" class="cell {% if board[row][col] != 0 %} pre-filled {% endif%}">
+                    <td data-row="{{ row }}" data-col="{{ col }}" class="cell {% if board[row][col] != 0 %} pre-filled {% endif %}">
                         {% if board[row][col] != 0 %}
                         {{ board[row][col] }}
                         {% endif %}
