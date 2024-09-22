@@ -2,35 +2,36 @@
 
 {% block head %}
 <title>Play - Sudoku Lounge</title>
-<link href="/static/css/play.css" rel="stylesheet">  
+<link href="/static/css/play.css" rel="stylesheet">
 {% endblock %}
-  
+
 {% block content %}
 <div class="container">
-    
+
     <div class="sudoku">
         <!-- Difficulty Selection -->
         <div class="difficulty-section">
             Difficulty:
             <nav>
-                <a href="/play?difficulty=easy" class="difficulty-button">Easy</a>
-                <a href="/play?difficulty=medium" class="difficulty-button">Medium</a>
-                <a href="/play?difficulty=hard" class="difficulty-button">Hard</a>
-                <a href="/play?difficulty=expert" class="difficulty-button">Expert</a>
-                <a href="/play?difficulty=master" class="difficulty-button">Master</a>
+                <a href="?difficulty=easy" class="difficulty-button">Easy</a>
+                <a href="?difficulty=medium" class="difficulty-button">Medium</a>
+                <a href="?difficulty=hard" class="difficulty-button">Hard</a>
+                <a href="?difficulty=expert" class="difficulty-button">Expert</a>
+                <a href="?difficulty=master" class="difficulty-button">Master</a>
             </nav>
         </div>
-        
+
         <!-- Sudoku Board using table -->
         <table id="sudokuBoard" class="sudoku-board">
             {% for row in range(9) %}
             <tr>
                 {% for col in range(9) %}
-                    <td data-row="{{ row }}" data-col="{{ col }}" class="cell {% if board[row][col] != 0 %} pre-filled {% endif %}">
-                        {% if board[row][col] != 0 %}
-                        {{ board[row][col] }}
-                        {% endif %}
-                    </td>
+                <td data-row="{{ row }}" data-col="{{ col }}"
+                    class="cell {% if board[row][col] != 0 %} pre-filled {% endif %}">
+                    {% if board[row][col] != 0 %}
+                    {{ board[row][col] }}
+                    {% endif %}
+                </td>
                 {% endfor %}
             </tr>
             {% endfor %}
@@ -41,14 +42,13 @@
     <div class="controls">
         <!-- Game Stats -->
         <div class="stats">
-            <div>Mistakes: 0/3</div><div>Score: 0</div><div>00:00</div>
+            <div>Mistakes: 0/3</div>
+            <div>Score: 0</div>
+            <div>00:00</div>
         </div>
         <!-- Action buttons -->
-        <div class="actions">
-            <img src="/static/images/undo.svg" alt="Undo" onclick=undo()>
-            <img src="/static/images/erase.svg" alt="Erase" onclick=erase()>
-            <img src="/static/images/pencil.svg" alt="Note" onclick=enable_note()>
-            <img src="/static/images/hint.svg" alt="Hint" onclick=hint()>
+        <div class="actions" onclick="erase()">
+            Erase
         </div>
         <!-- Numpad (1-9) -->
         <div class="numpad">
@@ -59,16 +59,17 @@
 
         <!-- New Game button -->
         <div class="new-game">
-            <a href="/play?difficulty={{ request.args.get('difficulty', 'easy') }}" style="text-decoration:none;color:white"> New Game</a>
+            <a href="?difficulty={{ request.args.get('difficulty', 'easy') }}" style="text-decoration:none;color:white">
+                New Game</a>
 
         </div>
     </div>
-    </div>
+</div>
 </div>
 {% endblock %}
 
 {% block script %}
 
 <script src="/static/play.js">
-</script> 
+</script>
 {% endblock %}

@@ -10,7 +10,7 @@ html, body {
 header {
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     height: 10vh;
     border-bottom: 1px solid rgba(0, 63, 123, .2);    
@@ -22,16 +22,6 @@ header h1 a {
     text-decoration:none;
     color: #232E3F;
     font-size: 28px;
-}
-header nav{
-    padding:0 30px;
-    display:flex;
-    gap:20px;
-}
-nav a {
-    color: #232E3F;
-    text-decoration: none;
-    font-size: 16px;
 }
 
 /* Main Content Styles */

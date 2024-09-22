@@ -3,13 +3,28 @@ import random
 
 app = Flask(__name__)
 
-# Initialize sudoku-board
-board = [[0]*9 for _ in range(9)]
+import random
 
 def generate_sudoku(remove_count):
+    global Solution
+    board = [[0]*9 for _ in range(9)]
+    for i in range(0, 9, 3):
+        fill_3x3(board, i, i)
+    
     solve(board)
-    remove_cells(board, remove_count)  
+
+    # Copy the solved board before removing cells
+    Solution = [row[:] for row in board]  
+    
+    remove_cells(board, remove_count)
     return board
+
+def fill_3x3(board, row, col):
+    nums = list(range(1, 10))
+    random.shuffle(nums)
+    for i in range(3):
+        for j in range(3):
+            board[row + i][col + j] = nums.pop()
 
 def is_valid(board, row, col, num):
     for i in range(9):
@@ -22,11 +37,14 @@ def is_valid(board, row, col, num):
                 return False
     return True
 
+# Solve with random number choices to introduce randomness
 def solve(board):
     for row in range(9):
         for col in range(9):
             if board[row][col] == 0:
-                for num in range(1, 10):
+                nums = list(range(1, 10))
+                random.shuffle(nums)  
+                for num in nums:
                     if is_valid(board, row, col, num):
                         board[row][col] = num
                         if solve(board):
@@ -36,25 +54,14 @@ def solve(board):
     return True
 
 def remove_cells(board, count):
-    cells = [(row, col) for row in range(9) for col in range(9)]
-    random.shuffle(cells)
-    for i in range(count):
-        row, col = cells[i]
+    for _ in range(count):
+        row, col = random.randint(0, 8), random.randint(0, 8)
+        while board[row][col] == 0:
+            row, col = random.randint(0, 8), random.randint(0, 8)
         board[row][col] = 0
 
 
 @app.route('/')
-def index():
-    return render_template('home.html')
-@app.route('/leaderboard')
-def lead():
-      return render_template('leaderboard.html')
-
-@app.route('/login')
-def login():
-      return render_template('login.html')
-
-@app.route('/play')
 def play():
     remove_count = 0 
     difficulty = request.args.get('difficulty', 'easy')
@@ -70,11 +77,6 @@ def play():
         remove_count = random.randint(40, 44)
 
     board = generate_sudoku(remove_count)
-
-    # Debugging: print or log board to check if it's generated correctly
-    print(f'Difficulty: {difficulty}, Remove Count: {remove_count}')
-    print('Generated board:', board)
-
     return render_template('play.html', board=board)
 
 
@@ -86,8 +88,7 @@ def validate_cell():
     number = data['number']
 
     # Solve the board for checking move
-    solve(board)
-    correct_number = board[row][col]
+    correct_number = Solution[row][col]
 
     # Compare user input with the correct solution
     if number == correct_number:
