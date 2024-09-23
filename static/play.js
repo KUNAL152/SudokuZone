@@ -32,7 +32,6 @@ function erase() {
             c.classList.remove('same-num');
         });
         selectedCell.innerText = '';
-        selectedCell = null;
     }
 }
 

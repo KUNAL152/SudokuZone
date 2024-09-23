@@ -1,12 +1,11 @@
 .container {
   background-color:white;
-  height:100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 30px;
-  margin: 0 auto;
-  
+  gap: 20px;
+  margin: 30px auto;
 }
 .difficulty-section {
   height:30px;
@@ -127,15 +126,15 @@ tr:nth-child(3n) td {
 
 .numpad {
   display: grid;
-  grid-template-columns: repeat(3, 90px);
+  grid-template-columns: repeat(3, 85px);
   gap: 10px;
   margin: 10px auto 20px auto;
 }
 
 .numpad button {
-  width: 90px;
-  height: 90px;
-  font-size: 42px;
+  width: 85px;
+  height: 85px;
+  font-size: 40px;
   background-color: #caf0f8;
   color: #023e8a;
   border: none;
@@ -169,4 +168,36 @@ tr:nth-child(3n) td {
 
 .new-game:hover {
   background-color: #48639b;
+}
+
+.Howtoplay{
+  width: 800px;
+  margin: auto;
+  color: #6e7c8c;
+  letter-spacing: normal;
+  line-height: 1.63;
+  padding: 0 10px;
+  
+}
+.Howtoplay h2{
+  flex: 1 1 100%;
+  color: #001c3f;
+}
+.Howtoplay p{
+  font-size: 16px;
+  font-weight: 400;
+}
+.Howtoplay ul{
+  background-color: #f3f6fa;
+  border-radius: 5px;
+  display: block;
+  list-style: disc outside;
+  margin: 20px 0 0;
+  padding: 20px 20px 20px 33px;
+}
+.Howtoplay li{
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 15px;
+  padding-left: 13px;
 }
