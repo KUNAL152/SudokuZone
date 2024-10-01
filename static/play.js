@@ -27,23 +27,28 @@ function stopTimer() {
 
 // Game Over function: Check if all cells are filled correctly
 function checkGameOver() {
+    // First, check if the player has made too many mistakes
     if (mistakeCount > 2) {
         stopTimer();
-        alert("You have made 3 mistake and lost this game.");
+        alert("You have made 3 mistakes and lost the game.");
         return true;
     }
+
+    // Check if all cells are filled
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
             if (board[row][col] === 0) {
-                return false; // Not all cells are filled
+                return false; // Early exit if any cell is empty
             }
         }
     }
-    // If all cells are filled correctly
-    stopTimer();
+
+    // If no empty cells and the player hasn't lost due to mistakes
     alert("Congratulations! You've completed the Sudoku.");
+    stopTimer();
     return true;
 }
+
 
 // Mistake counter: Increase and display mistakes
 function countMistakes() {
