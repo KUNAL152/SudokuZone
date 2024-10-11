@@ -113,6 +113,18 @@
         </ul>
         <p>Now that you know a little more about Sudoku, play and enjoy this free online game.</p>
     </div>
+    <div id="game-over-popup" class="popup hidden">
+        <div class="popup-content">
+            <h2 id="game-over-message"></h2>
+            <!-- New Game button -->
+            <div class="new-game">
+                <a href="?difficulty={{ request.args.get('difficulty', 'easy') }}"
+                    style="text-decoration:none;color:white">
+                    New Game</a>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 

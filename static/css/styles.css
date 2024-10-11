@@ -26,7 +26,7 @@ header h1 a {
 /* Main Content Styles */
 .main {
     flex: 1;
-    margin: 30px auto;
+    margin: 20px auto;
     background-color:white;;
     box-sizing: border-box; 
 /* Ensures padding doesn’t affect height */

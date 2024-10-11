@@ -26,28 +26,38 @@ function stopTimer() {
 }
 
 // Game Over function: Check if all cells are filled correctly
+// Function to show the popup
+function showPopup(message) {
+    const popup = document.getElementById('game-over-popup');
+    const messageElement = document.getElementById('game-over-message');
+    messageElement.innerText = message; // Display the game over message
+    popup.classList.remove('hidden'); // Show the popup
+}
+
+// Modified checkGameOver function
 function checkGameOver() {
-    // First, check if the player has made too many mistakes
+    // Check if the player has made too many mistakes
     if (mistakeCount > 2) {
         stopTimer();
-        alert("You have made 3 mistakes and lost the game.");
-        return true;
+        showPopup("You have made 3 mistakes.\n\t\t Game Over!");
     }
-
     // Check if all cells are filled
+    let allCellsFilled = true;
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
             if (board[row][col] === 0) {
-                return false; // Early exit if any cell is empty
+                allCellsFilled = false;
+                break;
             }
         }
     }
 
-    // If no empty cells and the player hasn't lost due to mistakes
-    alert("Congratulations! You've completed the Sudoku.");
-    stopTimer();
-    return true;
+    if (allCellsFilled) {
+        stopTimer();
+        showPopup("\t\tCongratulations!\nYou've completed the Sudoku.");
+    }
 }
+
 
 
 // Mistake counter: Increase and display mistakes
@@ -177,8 +187,8 @@ numpadButtons.forEach(btn => {
                         selectedCell.classList.add('wrong');
                         countMistakes();
                     }
-                    checkGameOver();
                     selectedCell.innerText = num;
+                    checkGameOver();
                     highlight_samenum(num);
                     disable(num);
                 })
@@ -187,4 +197,28 @@ numpadButtons.forEach(btn => {
                 });
         }
     });
+});
+
+// Handle new game
+document.getElementById('new-game-btn').addEventListener('click', function () {
+    // Hide the popup
+    const popup = document.getElementById('game-over-popup');
+    popup.classList.add('hidden');
+
+    // Reset the board (you can add a function to generate a new board here)
+    board = Array(9).fill().map(() => Array(9).fill(0));
+
+    // Reset mistakes and timer
+    mistakeCount = 0;
+    const mistakeDisplay = document.getElementById('mistake-counter');
+    mistakeDisplay.innerText = `Mistakes: ${mistakeCount}/3`;
+
+    // Reset the timer
+    stopTimer();
+    gameStart = false;
+    const timerDisplay = document.getElementById('timer');
+    timerDisplay.innerText = 'Time: 0:00';
+
+    // Optionally, reload the page or trigger a new game setup from the backend
+    location.reload(); // This can be replaced by an AJAX call or local reset of the grid
 });
