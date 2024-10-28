@@ -36,27 +36,43 @@ function showPopup(message) {
 
 // Modified checkGameOver function
 function checkGameOver() {
-    // Check if the player has made too many mistakes
-    if (mistakeCount > 2) {
-        stopTimer();
-        showPopup("You have made 3 mistakes.\n\t\t Game Over!");
-    }
-    // Check if all cells are filled
-    let allCellsFilled = true;
-    for (let row = 0; row < 9; row++) {
-        for (let col = 0; col < 9; col++) {
-            if (board[row][col] === 0) {
-                allCellsFilled = false;
-                break;
-            }
-        }
-    }
+    let allCellsCorrect = true;
+    cells.forEach(cell => {
+        const cellValue = parseInt(cell.innerText);
+        const { row, col } = cell.dataset;
+        if (!cellValue) {
+            allCellsCorrect = false;
+        } else {
+            fetch('/validate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ row: parseInt(row), col: parseInt(col), number: cellValue })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.correct) {
+                        countMistakes();
+                        allCellsCorrect = false;      // Set allCellsCorrect to false if any cell is incorrect
+                    }
 
-    if (allCellsFilled) {
-        stopTimer();
-        showPopup("\t\tCongratulations!\nYou've completed the Sudoku.");
-    }
+                    // Check if the game is over based on conditions
+                    if (mistakeCount >= 3) {
+                        stopTimer();
+                        showPopup("You have made 3 mistakes.\n\t\t Game Over!");
+                    } else if (allCellsCorrect) {
+                        stopTimer();
+                        showPopup("\t\tCongratulations!\nYou've completed the Sudoku.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    });
 }
+
 
 
 
@@ -185,7 +201,6 @@ numpadButtons.forEach(btn => {
                         selectedCell.classList.remove('wrong');
                     } else {
                         selectedCell.classList.add('wrong');
-                        countMistakes();
                     }
                     selectedCell.innerText = num;
                     checkGameOver();
@@ -197,28 +212,4 @@ numpadButtons.forEach(btn => {
                 });
         }
     });
-});
-
-// Handle new game
-document.getElementById('new-game-btn').addEventListener('click', function () {
-    // Hide the popup
-    const popup = document.getElementById('game-over-popup');
-    popup.classList.add('hidden');
-
-    // Reset the board (you can add a function to generate a new board here)
-    board = Array(9).fill().map(() => Array(9).fill(0));
-
-    // Reset mistakes and timer
-    mistakeCount = 0;
-    const mistakeDisplay = document.getElementById('mistake-counter');
-    mistakeDisplay.innerText = `Mistakes: ${mistakeCount}/3`;
-
-    // Reset the timer
-    stopTimer();
-    gameStart = false;
-    const timerDisplay = document.getElementById('timer');
-    timerDisplay.innerText = 'Time: 0:00';
-
-    // Optionally, reload the page or trigger a new game setup from the backend
-    location.reload(); // This can be replaced by an AJAX call or local reset of the grid
 });
